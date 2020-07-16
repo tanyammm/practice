@@ -3,8 +3,10 @@ const {ObjectID} = require("mongodb");
 module.exports = function (app, db) {
     app.post('/notes/add', (req, res) => { //Post-запрос. Добавление новой заметки
             const note = {
-                text: req.body.body,
+                text: req.body.text,
                 title: req.body.title,
+                date: req.body.date,                
+                rate: req.body.rate,
             };
             db.collection('notes').insertOne(note, (err, result) => {
                 console.log('NOTE', note)
@@ -45,9 +47,8 @@ module.exports = function (app, db) {
             } else { //иначе (если нет ошибки)                               
                 //console.log('result:',result) //вывод массива в консоль    
                 db.collection('notes').countDocuments().then((count) => { //подсчёт количества
-                //console.log('quantity: ' + count); //вывод количества в консоль                  
-                const quantity = count; //количество                   
-                res.send({quantity, result}); //вывод всего  
+                //console.log('quantity: ' + count); //вывод количества в консоль                                     
+                res.send(result); //вывод всего  
                 });
             }
         });
@@ -68,7 +69,7 @@ module.exports = function (app, db) {
     app.post('/notes/update', (req, res) => { //Обновление заметки
         const id = req.body.id;
         const details = {'_id': new ObjectID(id)};
-        const note = {text: req.body.body, title: req.body.title};
+        const note = {text: req.body.body, title: req.body.title, date: req.body.date, rate: req.body.rate};
         db.collection('notes').update(details, note, (err, result) => {
             if (err) {
                 res.send({'error':'An error has occurred'});
