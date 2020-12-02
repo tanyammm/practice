@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient; //взаимодейсвти
 const bodyParser = require('body-parser');
 const app = express(); //экземпляр фреймворка Express
 const port = 8000; //указание порта
-const uri = "mongodb+srv://user54:ghU76Tae2@cluster0.qyqnd.mongodb.net/Name?retryWrites=true&w=majority";
+const uri = "mongodb+srv";
 const dbName = 'Name'; 
 
 
